@@ -281,33 +281,36 @@ router.patch("/:bookId", auth, async (req, res) => {
  *         description: Internal server error
  */
 
-
 router.delete("/:bookId", auth, async (req, res) => {
   try {
-    let bookId = req.params.bookId;
-    const book = await Book.findById(bookId).select("-stock");
+    const { bookId } = req.params;
+
+    // Find the book by ID
+    const book = await Book.findById(bookId);
     if (!book) {
       return res
         .status(400)
-        .json({ errors: [{ message: "Could not find a book by this id" }] });
+        .json({ errors: [{ message: "Could not find a book by this ID" }] });
     }
 
-    const isAdmin = await User.findById(req.user.id).select("-password");
-
-    if (isAdmin.role === 0) {
+    // Check if the user is an admin
+    const user = await User.findById(req.user.id).select("role");
+    if (!user || user.role !== 1) {
       return res
-        .status(400)
+        .status(403)
         .json({ errors: [{ message: "Only admin can delete books" }] });
     }
 
-    await book.delete();
+    // Delete the book
+    await Book.deleteOne({ _id: bookId });
 
     res.status(200).json({ message: "Successfully deleted the book" });
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });
+
 
 
 // *************************************************************************
