@@ -1,4 +1,5 @@
-
+// ***************BOOK API  ROUTES ALONG WITH SWAGGER DOCUMENTATION**************
+ 
 const express = require("express");
 const router = express.Router();
 const Book = require("../../models/Book");
@@ -13,6 +14,7 @@ const User = require("../../models/User");
  * @swagger
  * /api/books:
  *   get:
+ *     summary:  list of all available Books
  *     description: Get a list of all books available in stock
  *     responses:
  *       200:
@@ -40,6 +42,7 @@ router.get("/", async (req, res) => {
  * @swagger
  * /api/books/{bookId}:
  *   get:
+ *    summary:  Get a specific book by ID
  *     description: Get a specific book by ID
  *     parameters:
  *       - name: bookId
@@ -83,6 +86,7 @@ router.get("/:bookId", async (req, res) => {
  * @swagger
  * /api/books:
  *   post:
+ *  summary:  Add a new book (Admin)
  *     description: Add a new book to the collection
  *     security:
  *       - bearerAuth: []
@@ -113,9 +117,6 @@ router.get("/:bookId", async (req, res) => {
  *       500:
  *         description: Server error
  */
-
-
-// ***************************************************************************
 
 
 router.post(
@@ -184,11 +185,12 @@ router.post(
  * @swagger
  * /api/books/{bookId}:
  *   patch:
+ *     summary: Update details of an existing book (Admin)
  *     description: Update details of an existing book
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - name: bookId
+ *       - name: bookId 
  *         in: path
  *         description: The ID of the book to update
  *         required: true
@@ -236,10 +238,10 @@ router.patch("/:bookId", auth, async (req, res) => {
     if (isAdmin.role === 0) {
       return res
         .status(400)
-        .json({ errors: [{ message: "Only admin can add books" }] });
+        .json({ errors: [{ message: "Only admin can update books" }] });
     }
     const updateOptions = req.body;
-    await book.update({ $set: updateOptions });
+    await book.updateOne({ $set: updateOptions });
 
     res.status(200).json({ message: "Successfully updated the book" });
   } catch (err) {
@@ -250,54 +252,36 @@ router.patch("/:bookId", auth, async (req, res) => {
 
 
 // ****************************************************************
-
+// @route  DELETE api/books/:bookId
+// @desc   Delete a book by ID
+// @access Private (Admin only)
 /**
  * @swagger
- * /api/books/{bookName}:
- *   get:
- *     summary: Get a book by title
- *     description: Fetches a book from the database by its title.
+ * /api/books/{bookId}:
+ *   delete:
+ *     summary: Delete a book (Admin)
+ *     description: Delete a book by its ID (Admin only)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: bookName
+ *       - name: bookId
+ *         in: path
+ *         description: ID of the book to delete
  *         required: true
- *         description: The name of the book to find.
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: A book object
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 _id:
- *                   type: string
- *                   description: The book's unique identifier
- *                 title:
- *                   type: string
- *                   description: The title of the book
- *                 description:
- *                   type: string
- *                   description: The description of the book
- *                 price:
- *                   type: number
- *                   description: The price of the book
- *                 stock:
- *                   type: number
- *                   description: The number of books available in stock
- *                 date:
- *                   type: string
- *                   format: date-time
- *                   description: The date when the book was added
+ *         description: Successfully deleted the book
  *       400:
- *         description: Could not find a book with the given title
+ *         description: Book not found with the provided ID
+ *       403:
+ *         description: Only admin can delete books
  *       500:
- *         description: Server error
+ *         description: Internal server error
  */
 
-// **************************************************************************
+
 router.delete("/:bookId", auth, async (req, res) => {
   try {
     let bookId = req.params.bookId;
@@ -330,3 +314,5 @@ router.delete("/:bookId", auth, async (req, res) => {
 
 
 module.exports = router;
+
+

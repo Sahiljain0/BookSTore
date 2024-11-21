@@ -1,3 +1,5 @@
+// *****************************PURCHASE MODEL *********************************
+
 const mongoose = require('mongoose');
 
 const PurchaseSchema = new mongoose.Schema({

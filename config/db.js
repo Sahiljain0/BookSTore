@@ -1,11 +1,12 @@
 
+// *************************DB CODE**************************************
 
 const mongoose = require("mongoose");
 
 // Load environment variables
 require("dotenv").config();
 
-// Get the MongoDB URI from the environment variables
+// Get the MongoDB URI from the environment variable file
 const db = process.env.MONGO_URI;
 
 const connectDB = async () => {

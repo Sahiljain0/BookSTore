@@ -1,4 +1,6 @@
 
+// *******************************SWAGGER CODE*******************************
+
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -12,7 +14,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: 'http://localhost:4000', // Adjust based on your server
+      url: 'http://localhost:4000', // you can  Adjust based on your server
     },
   ],
   components: {
