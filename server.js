@@ -47,6 +47,8 @@
 // module.exports = app; // Export app for testing purposes
 
 
+
+// ******************************************************************
 const express = require("express");
 const connectDB = require("./config/db");
 const dotenv = require("dotenv");
@@ -60,7 +62,7 @@ const app = express();
 // Enable CORS middleware
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN, 
+    origin: process.env.CORS_ORIGIN, // Ensure this is set in your .env
     credentials: true, // Allow credentials (cookies, HTTP authentication)
     maxAge: 14400, // Cache preflight response for 4 hours
   })
