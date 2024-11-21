@@ -14,7 +14,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: 'http://localhost:4000', // you can  Adjust based on your server
+      url: 'https://bookstore-un61.onrender.com', // you can  Adjust based on your server
     },
   ],
   components: {
