@@ -90,3 +90,11 @@ For an interactive API testing experience, Swagger UI is integrated into the pro
 - Use either Postman or Swagger UI to test various endpoints.
 - Refer to the `APIDoc.md` file for any additional details or examples.
 
+
+
+# for admin registration 
+    role = 1
+   
+
+# for student registration 
+   role = 0
