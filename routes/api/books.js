@@ -42,7 +42,7 @@ router.get("/", async (req, res) => {
  * @swagger
  * /api/books/{bookId}:
  *   get:
- *    summary:  Get a specific book by ID
+ *     summary:  Get a specific book by ID
  *     description: Get a specific book by ID
  *     parameters:
  *       - name: bookId
@@ -86,7 +86,7 @@ router.get("/:bookId", async (req, res) => {
  * @swagger
  * /api/books:
  *   post:
- *  summary:  Add a new book (Admin)
+ *     summary:  Add a new book (Admin)
  *     description: Add a new book to the collection
  *     security:
  *       - bearerAuth: []
